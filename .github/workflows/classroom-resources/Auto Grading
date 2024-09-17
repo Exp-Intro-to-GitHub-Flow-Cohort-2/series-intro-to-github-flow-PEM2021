@@ -1,0 +1,23 @@
+name: Auto Grading
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  autograding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Autograder
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Step 1 Create a Branch
+          setup-command: sleep 20
+          command: [ $(cat .github/steps/-step.txt) -ge 1 ] || [ $(cat .github/steps/-step.txt) = X ]
+          timeout: 10
+          max-score: 1
